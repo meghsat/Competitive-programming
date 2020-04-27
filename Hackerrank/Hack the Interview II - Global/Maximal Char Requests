@@ -1,0 +1,187 @@
+In this challenge, a string and a list of intervals are given. The string consists of English letters only and it can contain both lowercase and uppercase letters.
+
+For two different letters, we say that the first letter is greater than the second letter when the first letter comes later in the alphabet than the second letter ignoring the case of the letters. For example, the letter 'Z' and 't' are greater than the letters 'b' and 'G', while the letters 'B' andd 'b' are equal as case is not considered.
+
+The task is the following. For each given interval, you need to find the count of the greatest letter occurring in the string in that interval, ignoring the case of the letters, so occurrences of, for example,  and  are occurrences of the same letter.
+
+Consider, for example, for the string "AbaBacD". In the interval, [0, 4], the greatest letter is 'b' with count 2.
+
+Input Format
+
+The first line contains integer , denoting the length of the input string.
+
+The second line contains string .
+
+The third line contains an integer , denoting the number of intervals. Each line of the  subsequent lines contains two space-separated integers  and , denoting the beginning and the end of  interval.
+
+Constraints
+
+Subtasks
+
+For  of the maximum score.
+
+Output Format
+
+For each interval, print the count of the greatest letter occurring in the string in that interval.
+
+Sample Input 0
+
+5
+ddaaa
+1
+0 4
+Sample Output 0
+
+2
+Explanation 0
+
+The string is "ddaaa" and there is only one interval, i.e. the interval  denoting the whole string. The greatest character occuring in that interval is  and its count is , therefore,  is the answer.
+
+Sample Input 1
+
+8
+aAabBcba
+5
+2 6
+1 2
+2 2
+0 4
+0 7
+Sample Output 1
+
+1
+2
+1
+2
+1
+Explanation 1
+
+The input string is "aAabBcba" and there are 5 intervals to check:
+
+ -> aA[abBcb]a -> '' is the greatest and occurs  time
+ -> a[Aa]bBcba -> '' is the greatest and occurs  times
+ -> aA[a]bBcba -> '' is the greatest and occurs  time
+ -> [aAabB]cba -> '' is the greatest and occurs  times
+ -> [aAabBcba] -> '' is the greatest and occurs  time
+ 
+ 
+ #####################################################
+ 
+ import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.function.*;
+import java.util.regex.*;
+import java.util.stream.*;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
+
+class Result {
+
+    /*
+     * Complete the 'getMaxCharCount' function below.
+     *
+     * The function is expected to return an INTEGER_ARRAY.
+     * The function accepts following parameters:
+     *  1. STRING s
+     *  2. 2D_INTEGER_ARRAY queries
+     */
+
+    public static void getMaxCharCount(String s, List<List<Integer>> queries) {
+    // queries is a n x 2 array where queries[i][0] and queries[i][1] represents x[i] and y[i] for the ith query.
+            //System.out.println(queries.get(0).size());
+int[] arr=new int[s.length()];
+        s=s.toLowerCase();
+                    char[] ch  = s.toCharArray();
+        int m=0;
+        for(char c : ch){
+    int temp = (int)c;
+    int temp_integer = 96; //for lower case
+    if(temp<=122 & temp>=97)
+    {
+        arr[m]=temp-temp_integer;
+        
+       // System.out.println(c+" -"+arr[m]);
+        m++;
+    }
+        
+    }
+     // int count=0;  
+    for (int i = 0; i < queries.size(); i++) 
+    {
+      int count=0;
+    for (int j = 0; j < 1; j++)
+    {
+        //System.out.print(queries.get(i).get(j)+" "); 
+        
+       int max=0;
+        for(int k=(queries.get(i).get(j));k<=(queries.get(i).get(j+1));k++)
+        {
+            
+         if(arr[k]>=max)
+         {
+             if(arr[k]!=max)
+             {
+                 
+
+             max=arr[k];
+                // System.out.println(max);
+             count=0;
+             }
+             count++;
+         }
+        
+            
+                
+        }
+    }
+   System.out.println(count);
+}//return 0;
+    }
+
+}
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+      //  BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        int n = Integer.parseInt(bufferedReader.readLine().trim());
+
+        String s = bufferedReader.readLine();
+
+        int q = Integer.parseInt(bufferedReader.readLine().trim());
+
+        List<List<Integer>> query = new ArrayList<>();
+
+        IntStream.range(0, q).forEach(i -> {
+            try {
+                query.add(
+                    Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
+                        .map(Integer::parseInt)
+                        .collect(toList())
+                );
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        // List<Integer> ans = 
+        Result.getMaxCharCount(s, query);
+
+        // bufferedWriter.write(
+        //     ans.stream()
+        //         .map(Object::toString)
+        //         .collect(joining("\n"))
+        //     + "\n"
+        // );
+
+        bufferedReader.close();
+      //  bufferedWriter.close();
+    }
+}
+
+ 
