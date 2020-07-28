@@ -1,0 +1,127 @@
+Java Code:-
+
+import java.util.*;
+import java.io.*;
+public class travelrestrictions{
+    public static void main(String [] args)
+    {
+        Scanner sc=new Scanner(System.in);
+        int testcases=sc.nextInt();
+        
+        for(int in=0;in<testcases;in++)
+        {
+             System.out.println("Case #"+(in+1)+":");
+            int n=sc.nextInt();
+           
+            String ini=sc.next();
+            String ou=sc.next();
+            char[] arri=ini.toCharArray();
+            char[] arro=ou.toCharArray();
+            char[][] arr=new char[n+1][n+1];
+            for(int i=1;i<=n;i++)
+            {
+                if(i==1)
+                {
+                    boolean hoo=true;
+                }
+                for(int j=1;j<=n;j++)
+                {
+                    if(i==j)
+                    {
+                        arr[i][j]='Y';
+                        boolean boon=false;
+                    }
+                    else
+                    {
+                        if(arro[i-1]=='N')
+                        {
+                            arr[i][j]='N';
+                        }
+                        if(arri[j-1]=='N')
+                        {
+                            arr[i][j]='N';
+                        }
+                         
+                        if(arro[i-1]=='Y')
+                        {
+                            if(arri[j-1]=='Y')   // i-'Y' and j-'Y'
+                            {
+                                if(Math.abs(i-j)>1)
+                                {
+                                    int jasaka=0;
+                                if(i<j)
+                                {
+                                    boolean boo=true;
+                                    for(int k=i+1;k<j;k++)
+                                    {
+                                        if(arri[k-1]=='N')
+                                        {
+                                            arr[i][j]='N';
+                                            boo=false;
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            if(arro[k-1]=='N')
+                                            {
+                                                arr[i][j]='N';
+                                            boo=false;
+                                            break; 
+                                            }
+                                        }
+                                    }
+                                    if(boo==true)
+                                    {
+                                        arr[i][j]='Y';
+                                    }
+                                }
+                                else if(i>j)
+                                {
+                                    boolean loo=true;
+                                    for(int k=i-1;k>j;k--)
+                                    {
+                                        if(arri[k-1]=='N')
+                                        {
+                                            arr[i][j]='N';
+                                            loo=false;
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            if(arro[k-1]=='N')
+                                            {
+                                                arr[i][j]='N';
+                                            loo=false;
+                                            break; 
+                                            }
+                                        }
+                                    }
+                                    if(loo==true)
+                                    {
+                                        arr[i][j]='Y';
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                arr[i][j]='Y';
+                            }
+                            }
+                        }
+                    }
+                }
+            }
+        for(int i=1;i<=n;i++)
+            {
+                for(int j=1;j<=n;j++)
+                {
+                    System.out.print(arr[i][j]);
+                }
+                System.out.println();
+            }
+        
+        
+      
+        }
+    }
+}
